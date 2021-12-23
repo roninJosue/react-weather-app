@@ -47,7 +47,10 @@ const CityList = ({cities, onClickCity}) => {
 };
 
 CityList.propTypes = {
-  cities: PropTypes.array.isRequired,
+  cities: PropTypes.arrayOf(PropTypes.shape({
+    city: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired
+  })),
   onClickCity: PropTypes.func.isRequired
 };
 
