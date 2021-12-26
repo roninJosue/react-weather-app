@@ -1,6 +1,8 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
+import AppFrame from "../components/AppFrame";
 import CityList from "../components/CityList";
+import {Paper} from "@material-ui/core";
 
 const arrCities = [
   {city: 'Leon', country: 'Nicaragua'},
@@ -18,10 +20,14 @@ const MainPage = () => {
   }
 
   return (
-    <div>
-      <h2>City List</h2>
-      <CityList onClickCity={onClickHandler} cities={arrCities} />
-    </div>
+    <AppFrame>
+      <Paper elevation={3}>
+        <CityList
+          onClickCity={onClickHandler}
+          cities={arrCities}
+        />
+      </Paper>
+    </AppFrame>
   );
 };
 
