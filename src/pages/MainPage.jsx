@@ -5,11 +5,11 @@ import CityList from "../components/CityList";
 import {Paper} from "@material-ui/core";
 
 const arrCities = [
-  {city: 'Leon', country: 'Nicaragua'},
-  {city: 'Managua', country: 'Nicaragua'},
-  {city: 'Chinandega', country: 'Nicaragua'},
-  {city: 'Esteli', country: 'Nicaragua'},
-  {city: 'Ocotal', country: 'Nicaragua'},
+  {city: 'Leon', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Managua', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Chinandega', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Esteli', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Ocotal', country: 'Nicaragua', countryCode: 'NI'},
 ]
 
 const MainPage = () => {
