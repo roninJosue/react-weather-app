@@ -50,7 +50,7 @@ const CityList = ({cities, onClickCity}) => {
 
   useEffect(() => {
     const setWeather = (city, country, countryCode) => {
-      const appId = '7c75c2355d3ae7b9a796ef0e433d2bda'
+      const appId = process.env.REACT_APP_OPEN_WEATHER_APP_ID
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${appId}`
       axios
         .get(url)
