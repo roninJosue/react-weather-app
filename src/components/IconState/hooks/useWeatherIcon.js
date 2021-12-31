@@ -1,26 +1,29 @@
 import {
-  WiCloud,
   WiDayCloudy,
-  WiDayFog,
   WiDaySunny,
-  WiRain
+  WiRain,
+  WiSnow,
+  WiRaindrop,
+  WiThunderstorm
 } from "react-icons/wi";
 import React from "react";
 
 export const validStateName = [
-  'cloud',
-  'cloudy',
-  'fog',
-  'sunny',
-  'rain'
+  'clouds',
+  'clear',
+  'rain',
+  'snow',
+  'drizzle',
+  'thunderstorm'
 ]
 
 const stateByName = {
-  cloud: WiCloud,
-  cloudy: WiDayCloudy,
-  fog: WiDayFog,
-  sunny: WiDaySunny,
-  rain: WiRain
+  clouds: WiDayCloudy,
+  clear: WiDaySunny,
+  rain: WiRain,
+  snow: WiSnow,
+  drizzle: WiRaindrop,
+  thunderstorm: WiThunderstorm
 }
 
 const useWeatherIcon = (state) => {

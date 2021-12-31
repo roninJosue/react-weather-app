@@ -1,16 +1,18 @@
 import React from "react";
-import {render, screen, fireEvent} from "@testing-library/react";
+import {render, screen, fireEvent, act} from "@testing-library/react";
 import CityList from "./CityList";
 
 const arrCities = [
-  {city: 'Leon', country: 'Nicaragua'},
-  {city: 'Managua', country: 'Nicaragua'},
-  {city: 'Chinandega', country: 'Nicaragua'},
+  {city: 'Leon', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Managua', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Chinandega', country: 'Nicaragua', countryCode: 'NI'},
 ]
 
 test('City List render', async () => {
 
-  render(<CityList cities={arrCities} onClickCity={() => {}} />)
+  act(() => {
+    render(<CityList cities={arrCities} onClickCity={() => {}} />)
+  })
 
   const list = await screen.findAllByRole('button')
 
@@ -19,7 +21,10 @@ test('City List render', async () => {
 
 test('City List click on item', async () => {
   const onClick = jest.fn()
-  render(<CityList cities={arrCities} onClickCity={onClick} />)
+
+  act(() => {
+    render(<CityList cities={arrCities} onClickCity={onClick} />)
+  })
 
 
   const items = await screen.findAllByRole('button')

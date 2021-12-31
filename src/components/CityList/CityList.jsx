@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import {Grid, List, ListItem} from '@material-ui/core'
@@ -55,8 +55,9 @@ const CityList = ({cities, onClickCity}) => {
       axios
         .get(url)
         .then(({data, status}) => {
+          console.log(data.weather[0].main)
           const temperature = data.main.temp
-          const state = 'sunny'
+          const state = data.weather[0].main.toLowerCase()
           const propName = `${city}-${country}`
           const propValue = {temperature, state}
           //setAllWeather({...allWeather, [propName]: propValue})
