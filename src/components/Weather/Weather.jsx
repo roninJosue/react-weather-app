@@ -19,7 +19,7 @@ const Weather = ({temperature, state}) => {
       {
         state
           ? <IconState size={'6em'} state={state} />
-          : <Skeleton variant='circle' height={80} width={80}></Skeleton>
+          : <Skeleton variant='circle' height={80} width={80} />
       }
       {
         temperature
@@ -31,7 +31,7 @@ const Weather = ({temperature, state}) => {
               {temperature}
             </Typography>
           )
-          : <Skeleton variant='text' height={80} width={80}></Skeleton>
+          : <Skeleton variant='text' height={80} width={80} />
 
       }
     </Grid>
