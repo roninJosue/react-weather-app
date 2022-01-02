@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 class ErrorBoundary extends Component {
 
@@ -6,47 +6,21 @@ class ErrorBoundary extends Component {
     super(props)
 
     this.state = {
-      active: false
+      hasError: false
     }
   }
 
-  isActive = () => {
-    return this.state.active ? "Active" : "No active"
+  static getDerivedStateFromError(error) {
+    return {hasError: true}
   }
 
-  onClickHandler = () => {
-    this.setState({ active: true })
+  componentDidCatch(error, errorInfo) {
+    console.log(errorInfo)
   }
-
-  componentDidMount() {
-    console.log("component was mount")
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log("Prev state:", prevState.active)
-    console.log("New state:", this.state.active)
-    console.log("Component update")
-  }
-
-  componentWillUnmount() {
-    console.log("Component was unmount")
-  }
-
 
   render() {
     return (
-      <div>
-        <button onClick={this.onClickHandler}>
-          Activate
-        </button>
-        <h1>
-          ErrorBoundary {this.props.saludo}
-          {
-            this.isActive()
-          }
-        </h1>
-      </div>
-
+      this.state.hasError ? (<h1>There was an error</h1>) : this.props.children
     )
   }
 }
