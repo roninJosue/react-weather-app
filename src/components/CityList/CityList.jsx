@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import axios from "axios";
 import convertUnits from 'convert-units'
 import {Grid, List, ListItem} from '@material-ui/core'
 import {Alert} from "@material-ui/lab";
 import CityInfo from "../CityInfo";
 import Weather from "../Weather";
+import {getWeather} from "../../config/api";
 
 const getCityCode = (city, countryCode) => `${city}-${countryCode}`
 
@@ -16,7 +16,7 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
     <ListItem
       button
       key={getCityCode(city, countryCode)}
-      onClick={eventOnClickCity}
+      onClick={() => eventOnClickCity(city, countryCode)}
     >
       <Grid
         container
@@ -51,11 +51,8 @@ const CityList = ({cities, onClickCity}) => {
 
   useEffect(() => {
     const setWeather = async (city, countryCode) => {
-      const appId = process.env.REACT_APP_OPEN_WEATHER_APP_ID
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${appId}`
-
       try {
-        const response = await axios.get(url)
+        const response = await getWeather(city, countryCode)
         const {data} = response
         const temperature = Number(convertUnits(data.main.temp).from('K').to('C').toFixed(0))
         const state = data.weather[0].main.toLowerCase()
