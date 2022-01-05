@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react"
 import {getWeather} from "../../../config/api";
-import {getCityCode, toCelsius} from "../../../utils/utils";
+import getAllWeather from "../../../utils/transform/getAllWeather";
 
 
 
@@ -12,12 +12,8 @@ const useCityList = (cities) => {
     const setWeather = async (city, countryCode) => {
       try {
         const response = await getWeather(city, countryCode)
-        const {data} = response
-        const temperature = toCelsius(data.main.temp)
-        const state = data.weather[0].main.toLowerCase()
-        const propName = getCityCode(city, countryCode)
-        const propValue = {temperature, state}
-        setAllWeather(all => ({...all, [propName]: propValue}))
+        const allWeatherAux = getAllWeather(response, city, countryCode)
+        setAllWeather(all => ({...all, ...allWeatherAux}))
       } catch (err) {
         if (err.response) {
           setError('Weather App error')

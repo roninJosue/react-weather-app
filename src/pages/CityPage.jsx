@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid} from "@material-ui/core";
+import {Grid, LinearProgress} from "@material-ui/core";
 import CityInfo from "../components/CityInfo";
 import Weather from "../components/Weather";
 import WeatherDetails from "../components/WeatherDetails";
@@ -7,17 +7,24 @@ import Forecast from "../components/Forecast";
 import ForecastChart from "../components/ForecastChart";
 import AppFrame from "../components/AppFrame";
 import useCityPage from "./hooks/useCityPage";
+import useCityList from "../components/CityList/hooks/useCityList";
+import {getCityCode} from "../utils/utils";
+import {getCountryNameByCountryCode} from "../services/cities";
 
 const CityPage = () => {
   const {
     chartData,
     forecastItemList,
-    city
+    city,
+    countryCode
   } = useCityPage()
 
-  const country = 'Nicaragua'
-  const state = 'rain'
-  const temperature = 13
+  const {allWeather} = useCityList([{city, countryCode}])
+  const weather = allWeather[getCityCode(city, countryCode)]
+
+  const country = getCountryNameByCountryCode(countryCode)
+  const state = weather && weather.state
+  const temperature = weather && weather.temperature
   const wind = 22
   const humidity = 11
 
@@ -44,13 +51,22 @@ const CityPage = () => {
           container
           justifyContent='center'
         >
-          <Weather temperature={temperature} state={state}/>
-          <WeatherDetails wind={wind} humidity={humidity}/>
+          <Weather
+            temperature={temperature}
+            state={state}
+          />
+          <WeatherDetails
+            wind={wind}
+            humidity={humidity}
+          />
           <Grid item xs={12}>
-            {chartData && <ForecastChart data={chartData}/>}
+            {!chartData && !forecastItemList && <LinearProgress />}
           </Grid>
           <Grid item xs={12}>
-            {forecastItemList && <Forecast forecastItemList={forecastItemList}/>}
+            {chartData && (<ForecastChart data={chartData}/>)}
+          </Grid>
+          <Grid item xs={12}>
+            {forecastItemList && (<Forecast forecastItemList={forecastItemList}/>)}
           </Grid>
         </Grid>
       </Grid>

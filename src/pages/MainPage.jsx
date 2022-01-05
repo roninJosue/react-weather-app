@@ -3,17 +3,7 @@ import {useHistory} from "react-router-dom";
 import AppFrame from "../components/AppFrame";
 import CityList from "../components/CityList";
 import {Paper} from "@material-ui/core";
-
-const arrCities = [
-  {city: 'Leon', country: 'Nicaragua', countryCode: 'NI'},
-  {city: 'Managua', country: 'Nicaragua', countryCode: 'NI'},
-  {city: 'Chinandega', country: 'Nicaragua', countryCode: 'NI'},
-  {city: 'Esteli', country: 'Nicaragua', countryCode: 'NI'},
-  {city: 'Ocotal', country: 'Nicaragua', countryCode: 'NI'},
-  {city: 'Jinotega', country: 'Nicaragua', countryCode: 'NI'},
-  {city: 'Madrid', country: 'España', countryCode: 'ES'},
-  {city: 'Buenos Aires', country: 'Argentina', countryCode: 'AR'},
-]
+import {getCities} from "../services/cities";
 
 const MainPage = () => {
   const history = useHistory()
@@ -27,7 +17,7 @@ const MainPage = () => {
       <Paper elevation={3}>
         <CityList
           onClickCity={onClickHandler}
-          cities={arrCities}
+          cities={getCities()}
         />
       </Paper>
     </AppFrame>
