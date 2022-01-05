@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import convertUnits from 'convert-units'
 import {Grid, List, ListItem} from '@material-ui/core'
 import {Alert} from "@material-ui/lab";
 import CityInfo from "../CityInfo";
 import Weather from "../Weather";
-import {getWeather} from "../../config/api";
-
-const getCityCode = (city, countryCode) => `${city}-${countryCode}`
+import useCityList from "./hooks/useCityList";
+import {getCityCode} from "../../utils/utils";
 
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
   const {city, country, countryCode} = cityAndCountry
@@ -46,32 +44,12 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 }
 
 const CityList = ({cities, onClickCity}) => {
-  const [allWeather, setAllWeather] = useState({})
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const setWeather = async (city, countryCode) => {
-      try {
-        const response = await getWeather(city, countryCode)
-        const {data} = response
-        const temperature = Number(convertUnits(data.main.temp).from('K').to('C').toFixed(0))
-        const state = data.weather[0].main.toLowerCase()
-        const propName = getCityCode(city, countryCode)
-        const propValue = {temperature, state}
-        setAllWeather(all => ({...all, [propName]: propValue}))
-      } catch (err) {
-        if (err.response) {
-          setError('Weather App error')
-        } else if (err.request) {
-          setError('Check your network connection')
-        } else {
-          setError('Problems to load the weather')
-        }
-      }
-    }
-
-    cities.forEach(({city, countryCode}) => setWeather(city, countryCode))
-  }, [cities]);
+  const {
+    error,
+    allWeather,
+    setError
+  } = useCityList(cities)
 
   return (
     <>

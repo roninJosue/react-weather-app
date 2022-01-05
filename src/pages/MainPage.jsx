@@ -11,6 +11,8 @@ const arrCities = [
   {city: 'Esteli', country: 'Nicaragua', countryCode: 'NI'},
   {city: 'Ocotal', country: 'Nicaragua', countryCode: 'NI'},
   {city: 'Jinotega', country: 'Nicaragua', countryCode: 'NI'},
+  {city: 'Madrid', country: 'España', countryCode: 'ES'},
+  {city: 'Buenos Aires', country: 'Argentina', countryCode: 'AR'},
 ]
 
 const MainPage = () => {
