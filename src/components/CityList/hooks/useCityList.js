@@ -1,11 +1,11 @@
 import {useState, useEffect} from "react"
 import {getWeather} from "../../../config/api";
 import getAllWeather from "../../../utils/transform/getAllWeather";
+import {getCityCode} from "../../../utils/utils";
 
 
 
-const useCityList = (cities) => {
-  const [allWeather, setAllWeather] = useState({})
+const useCityList = (cities, allWeather, onSetAllWeather) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -13,7 +13,8 @@ const useCityList = (cities) => {
       try {
         const response = await getWeather(city, countryCode)
         const allWeatherAux = getAllWeather(response, city, countryCode)
-        setAllWeather(all => ({...all, ...allWeatherAux}))
+        //setAllWeather(all => ({...all, ...allWeatherAux}))
+        onSetAllWeather(allWeatherAux)
       } catch (err) {
         if (err.response) {
           setError('Weather App error')
@@ -25,11 +26,15 @@ const useCityList = (cities) => {
       }
     }
 
-    cities.forEach(({city, countryCode}) => setWeather(city, countryCode))
-  }, [cities]);
+    cities.forEach(({city, countryCode}) => {
+      console.log(allWeather)
+      if (!allWeather[getCityCode(city, countryCode)]){
+        setWeather(city, countryCode)
+      }
+    })
+  }, [cities, onSetAllWeather, allWeather]);
 
   return {
-    allWeather,
     error,
     setError
   }

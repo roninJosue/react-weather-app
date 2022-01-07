@@ -1,4 +1,4 @@
-import {useState, useEffect, useDebugValue} from "react"
+import {useState, useEffect} from "react"
 import {getForecast} from "../../config/api";
 import {useParams} from "react-router-dom";
 import getChartData from "../../utils/transform/getChartData";
@@ -8,9 +8,6 @@ const useCityPage = () => {
   const [chartData, setChartData] = useState(null);
   const [forecastItemList, setForecastItemList] = useState(null);
   const {city, countryCode} = useParams()
-
-  useDebugValue(city)
-  useDebugValue(chartData)
 
   useEffect(() => {
     const forecast = async () => {
