@@ -11,18 +11,38 @@ import useCityList from "../components/CityList/hooks/useCityList";
 import {getCityCode} from "../utils/utils";
 import {getCountryNameByCountryCode} from "../services/cities";
 
-const CityPage = ({allWeather, onSetAllWeather}) => {
+const CityPage = ({data, actions}) => {
   const {
-    chartData,
-    forecastItemList,
+    onSetAllWeather,
+    onSetChartData,
+    onSetForecastItemList
+  } = actions
+
+  const {
+    allWeather,
+    allChartData,
+    allForecastItemList
+  } = data
+
+  const {
     city,
     countryCode
-  } = useCityPage()
+  } = useCityPage(
+    allChartData,
+    allForecastItemList,
+    onSetChartData,
+    onSetForecastItemList
+  )
 
   const cities = useMemo(() => ([{city, countryCode}]), [city, countryCode]);
+
   useCityList(cities, allWeather, onSetAllWeather)
-  const weather = allWeather[getCityCode(city, countryCode)]
-//debugger;
+
+  const cityCode = getCityCode(city, countryCode)
+  const chartData = allChartData[cityCode]
+  const forecastItemList = allForecastItemList[cityCode]
+
+  const weather = allWeather[cityCode]
   const country = getCountryNameByCountryCode(countryCode)
   const state = weather && weather.state
   const temperature = weather && weather.temperature
@@ -63,7 +83,7 @@ const CityPage = ({allWeather, onSetAllWeather}) => {
             />
           )}
           <Grid item xs={12}>
-            {!chartData && !forecastItemList && <LinearProgress />}
+            {!chartData && !forecastItemList && <LinearProgress/>}
           </Grid>
           <Grid item xs={12}>
             {chartData && (<ForecastChart data={chartData}/>)}

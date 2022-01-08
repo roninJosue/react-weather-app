@@ -11,6 +11,9 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
   useEffect(() => {
     const setWeather = async (city, countryCode) => {
       try {
+        const propName = getCityCode(city, countryCode)
+        onSetAllWeather({[propName]: {}})
+
         const response = await getWeather(city, countryCode)
         const allWeatherAux = getAllWeather(response, city, countryCode)
         //setAllWeather(all => ({...all, ...allWeatherAux}))
@@ -27,7 +30,6 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
     }
 
     cities.forEach(({city, countryCode}) => {
-      console.log(allWeather)
       if (!allWeather[getCityCode(city, countryCode)]){
         setWeather(city, countryCode)
       }
