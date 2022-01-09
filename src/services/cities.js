@@ -6,7 +6,6 @@ const cities = [
   {city: 'Ocotal', country: 'Nicaragua', countryCode: 'NI'},
   {city: 'Jinotega', country: 'Nicaragua', countryCode: 'NI'},
   {city: 'Madrid', country: 'España', countryCode: 'ES'},
-  {city: 'Buenos Aires', country: 'Argentina', countryCode: 'AR'},
 ]
 
 export const getCities = () => cities
