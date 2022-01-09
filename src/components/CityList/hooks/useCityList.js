@@ -5,19 +5,27 @@ import {getCityCode} from "../../../utils/utils";
 
 
 
-const useCityList = (cities, allWeather, onSetAllWeather) => {
+const useCityList = (cities, allWeather, actions) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const setWeather = async (city, countryCode) => {
       try {
         const propName = getCityCode(city, countryCode)
-        onSetAllWeather({[propName]: {}})
 
         const response = await getWeather(city, countryCode)
         const allWeatherAux = getAllWeather(response, city, countryCode)
-        //setAllWeather(all => ({...all, ...allWeatherAux}))
-        onSetAllWeather(allWeatherAux)
+
+        actions({
+          type: 'SET_ALL_WEATHER',
+          payload: {[propName]: {}}
+        })
+
+        actions({
+          type: 'SET_ALL_WEATHER',
+          payload: allWeatherAux
+        })
+
       } catch (err) {
         if (err.response) {
           setError('Weather App error')
@@ -34,7 +42,7 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
         setWeather(city, countryCode)
       }
     })
-  }, [cities, onSetAllWeather, allWeather]);
+  }, [cities, actions, allWeather]);
 
   return {
     error,
