@@ -13,13 +13,13 @@ const useCityList = (cities, allWeather, actions) => {
       try {
         const propName = getCityCode(city, countryCode)
 
-        const response = await getWeather(city, countryCode)
-        const allWeatherAux = getAllWeather(response, city, countryCode)
-
         actions({
           type: 'SET_ALL_WEATHER',
           payload: {[propName]: {}}
         })
+
+        const response = await getWeather(city, countryCode)
+        const allWeatherAux = getAllWeather(response, city, countryCode)
 
         actions({
           type: 'SET_ALL_WEATHER',
