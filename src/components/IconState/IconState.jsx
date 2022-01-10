@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {IconContext} from "react-icons"
 import useWeatherIcon, {validStateName} from "./hooks/useWeatherIcon";
 
 const IconState = ({state, size}) => {
   const {renderState} = useWeatherIcon(state)
+  const sizeMemo = useMemo(() => ({size}), [size]);
 
   return (
-    <IconContext.Provider value={{size}}>
+    <IconContext.Provider value={sizeMemo}>
       {renderState()}
     </IconContext.Provider>
   );
