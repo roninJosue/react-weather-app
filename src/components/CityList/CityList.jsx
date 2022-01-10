@@ -7,39 +7,58 @@ import Weather from "../Weather";
 import useCityList from "./hooks/useCityList";
 import {getCityCode} from "../../utils/utils";
 
-const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
-  const {city, country, countryCode} = cityAndCountry
-
-  return (
-    <ListItem
-      button
-      key={getCityCode(city, countryCode)}
-      onClick={() => eventOnClickCity(city, countryCode)}
-    >
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
+const CityListItem = React.memo(
+  (
+    {
+      city,
+      country,
+      countryCode,
+      weather,
+      eventOnClickCity
+    }
+  ) => {
+    return (
+      <ListItem
+        button
+        onClick={() => eventOnClickCity(city, countryCode)}
       >
         <Grid
-          item
-          md={8}
-          xs={12}
+          container
+          justifyContent="center"
+          alignItems="center"
         >
-          <CityInfo city={city} country={country}/>
+          <Grid
+            item
+            md={8}
+            xs={12}
+          >
+            <CityInfo city={city} country={country}/>
+          </Grid>
+          <Grid
+            item
+            md={4}
+            xs={12}
+          >
+            <Weather
+              temperature={weather && weather.temperature}
+              state={weather && weather.state}
+            />
+          </Grid>
         </Grid>
-        <Grid
-          item
-          md={4}
-          xs={12}
-        >
-          <Weather
-            temperature={weather && weather.temperature}
-            state={weather && weather.state}
-          />
-        </Grid>
-      </Grid>
-    </ListItem>
+      </ListItem>
+    )
+  }
+)
+
+const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
+  const {city, countryCode} = cityAndCountry
+  return (
+    <CityListItem
+      key={getCityCode(city, countryCode)}
+      weather={weather}
+      eventOnClickCity={eventOnClickCity}
+      {...cityAndCountry}
+    />
   )
 }
 
@@ -76,4 +95,4 @@ CityList.propTypes = {
   onClickCity: PropTypes.func.isRequired
 };
 
-export default CityList;
+export default React.memo(CityList)
