@@ -41,7 +41,7 @@ const NotFoundPage = () => {
               component={LinkRouter}
               to="/main"
             >
-              Go main
+              Go to main
             </Link>
           </Grid>
         </Grid>
